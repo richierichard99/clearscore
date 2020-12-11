@@ -27,7 +27,7 @@ trait SparkScriptRunner {
 
     val conifg = ConfigFactory.parseFile(new File(configPath))
     val logger = Logger.getLogger("com.clearscore")
-    logger.setLevel(Level.INFO) // todo: make configurable
+    logger.setLevel(Level.INFO) // todo: fix spark logging
     val spark = SparkSession.builder.appName(name).getOrCreate()
 
     logger.info(s"Starting Script: $name")
