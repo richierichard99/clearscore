@@ -11,7 +11,7 @@ trait SparkScriptRunner {
   val name: String
   def run(spark: SparkSession, logger: Logger, config: Config): Unit
 
-  def main(args: Array[String]): Unit = {
+  final def main(args: Array[String]): Unit = {
     import Opt._
     val initialArgs = Args(
       "run-main SparkScript [options]",
