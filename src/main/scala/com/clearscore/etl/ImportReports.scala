@@ -33,6 +33,7 @@ object ImportReports extends SparkScriptRunner {
     val reportsInputPath = config.getString("reports.raw_reports")
     val reportsOutputPath = config.getString("reports.reports_unified")
     val reportsDir = FileSystems.getDefault.getPath(reportsInputPath)
+    // finds all files in a directory & subdirectories
     val jsonFiles = Files.walk(reportsDir).iterator().asScala.filter(Files.isRegularFile(_))
 
     // I'm not very happy with this - it works but it's really memory intensive,
