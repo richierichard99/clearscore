@@ -34,6 +34,9 @@ object ImportReports extends SparkScriptRunner {
     val reportsOutputPath = config.getString("reports.reports_unified")
     val reportsDir = FileSystems.getDefault.getPath(reportsInputPath)
     // finds all files in a directory & subdirectories
+    // this may not work so well on a hdfs system for example
+    // a function to differentiate between file systems and find the json files specifically for each one would be needed
+    // for this to be truly scalable
     val jsonFiles = Files.walk(reportsDir).iterator().asScala.filter(Files.isRegularFile(_))
 
     // I'm not very happy with this - it works but it's really memory intensive,
