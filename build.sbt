@@ -13,3 +13,8 @@ libraryDependencies ++= Seq(
   "com.concurrentthought.cla" %% "command-line-arguments" % "0.5.0",
   "com.concurrentthought.cla" %% "command-line-arguments-examples" % "0.5.0"
 )
+
+assemblyMergeStrategy in assembly := {
+  case PathList("META-INF", xs @ _*) => MergeStrategy.discard
+  case x => MergeStrategy.first
+}
