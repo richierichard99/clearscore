@@ -5,6 +5,7 @@ import com.typesafe.config.Config
 import org.apache.log4j.Logger
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions.{explode, mean}
+import com.clearscore.utils.DataFrameUtils.extractScoreBlock
 
 object AverageCreditScore extends SparkScriptRunner {
 
@@ -17,9 +18,7 @@ object AverageCreditScore extends SparkScriptRunner {
     val reportsDf = spark.read.parquet(reportsPath)
 
     val creditScore = reportsDf
-      .select(explode($"Delphi"))
-      .select("col.Score")
-      .withColumn("Score", $"Score".cast("double"))
+      .select(extractScoreBlock)
       .agg(mean("Score").as("MeanCreditScore"))
 
     // lovely spark writing everything to partitioned directories
