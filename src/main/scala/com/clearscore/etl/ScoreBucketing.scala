@@ -4,7 +4,7 @@ import com.clearscore.spark.SparkScriptRunner
 import com.typesafe.config.Config
 import org.apache.log4j.Logger
 import org.apache.spark.sql.SparkSession
-import org.apache.spark.sql.functions.{ceil, udf, lit}
+import org.apache.spark.sql.functions.{floor, udf, lit}
 
 object ScoreBucketing extends SparkScriptRunner {
   val name = "ScoreBucketing"
@@ -29,7 +29,7 @@ object ScoreBucketing extends SparkScriptRunner {
     val reportsDf = spark.read.parquet(reportsPath)
     val idsAndScores = reportsDf
       .select($"user-uuid", $"Score")
-      .withColumn("normalised_rounded", ceil($"Score"/scoreRange))
+      .withColumn("normalised_rounded", floor($"Score"/scoreRange))
 
     val groupedAndFormatted = idsAndScores.groupBy("normalised_rounded").count()
       .withColumn("score-range", formatNormalisedScoreUdf($"normalised_rounded", lit(scoreRange)))
