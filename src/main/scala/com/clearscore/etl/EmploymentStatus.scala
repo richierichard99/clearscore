@@ -14,9 +14,9 @@ object EmploymentStatus extends SparkScriptRunner {
     val employmentStatusPath = config.getString("stats.employment_status")
     val accountsDF = spark.read.parquet(accountsPath)
 
-    val employmentStatusAndId = accountsDF.select("accountId", "account.user.employmentStatus")
+    val employmentStatusAndId = accountsDF.select("uuid", "account.user.employmentStatus")
     val grouped = employmentStatusAndId.groupBy("employmentStatus")
-      .agg(size(collect_set("accountId")).as("count"))
+      .agg(size(collect_set("uuid")).as("count"))
     // this give the distinct number of accounts for each employment status - rather than just the number of records,
     // allowing for duplicates in the data
 

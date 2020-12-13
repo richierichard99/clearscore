@@ -14,7 +14,17 @@ libraryDependencies ++= Seq(
   "com.concurrentthought.cla" %% "command-line-arguments-examples" % "0.5.0"
 )
 
+libraryDependencies += "org.scalatest" %% "scalatest" % "2.2.4" % "test"
+
 assemblyMergeStrategy in assembly := {
   case PathList("META-INF", xs @ _*) => MergeStrategy.discard
   case x => MergeStrategy.first
+}
+
+lazy val buildJars = taskKey[File]("build fat jars for project")
+
+buildJars := {
+  val c = (compile in Compile).value
+  val t: Unit = (test in Test).value
+  assembly.value
 }
