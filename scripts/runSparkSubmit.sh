@@ -1,0 +1,1 @@
+spark-submit --class com.clearscore.etl.$1 --master local[5] ../target/scala-2.11/clearscore-assembly-0.1.jar -c config/clearscore.conf
