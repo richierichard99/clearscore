@@ -57,4 +57,4 @@ to run on a proper distributed system.
 * Improved Automation - orchestrate jobs using Airflow instead of .cmd or .sh
 * load user summaries to database to help others interact with the summary data.
 * Import reports may not function so well on some file systems (i.e. HDFS) check this, and edit code accordingly, to do different things for different file systems.
-* separate non-spark jobs to merge and prettify output stats (currently they´re in a standard not-so-friendly partitioned format)
+* separate non-spark jobs to merge and prettify output stats (currently they´re in a standard spark not-so-user-friendly partitioned format)
