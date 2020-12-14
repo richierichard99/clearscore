@@ -58,3 +58,4 @@ to run on a proper distributed system.
 * load user summaries to database to help others interact with the summary data.
 * Import reports may not function so well on some file systems (i.e. HDFS) check this, and edit code accordingly, to do different things for different file systems.
 * separate non-spark jobs to merge and prettify output stats (currently they´re in a standard spark not-so-user-friendly partitioned format)
+* fix spark logging - it's currently spitting out all spark info logs rather than just the info logs for the etl code.
