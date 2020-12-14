@@ -4,16 +4,15 @@ import com.clearscore.spark.SparkScriptRunner
 import com.typesafe.config.Config
 import org.apache.log4j.Logger
 import org.apache.spark.sql.SparkSession
-import org.apache.spark.sql.functions.{floor, udf, lit}
+import org.apache.spark.sql.functions.{ceil, lit, udf, upper}
 
 object ScoreBucketing extends SparkScriptRunner {
   val name = "ScoreBucketing"
 
-  // TODO: Unit test
   def formatNormalisedScore(score: Double, range: Double): String = {
-    val upperBound = (score +1 )*range
-    val lowerBound = if (score == 0.0) score else (score*range) + 1
-    if (upperBound == 0) "0-50" else s"$lowerBound-$upperBound"
+    val upperBound = if (score == 0) range else score*range
+    val lowerBound = if (upperBound == range) 0.0 else (upperBound - range) + 1
+    s"$lowerBound-$upperBound"
   }
 
   private val formatNormalisedScoreUdf = udf((x: Double, range: Double) => formatNormalisedScore(x, range))
@@ -29,7 +28,7 @@ object ScoreBucketing extends SparkScriptRunner {
     val reportsDf = spark.read.parquet(reportsPath)
     val idsAndScores = reportsDf
       .select($"user-uuid", $"Score")
-      .withColumn("normalised_rounded", floor($"Score"/scoreRange))
+      .withColumn("normalised_rounded", ceil($"Score"/scoreRange))
 
     val groupedAndFormatted = idsAndScores.groupBy("normalised_rounded").count()
       .withColumn("score-range", formatNormalisedScoreUdf($"normalised_rounded", lit(scoreRange)))
