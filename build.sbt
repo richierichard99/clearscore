@@ -2,11 +2,11 @@ name := "clearscore"
 
 version := "0.1"
 
-scalaVersion := "2.11.12"
+scalaVersion := "2.12.10"
 
 libraryDependencies ++= Seq(
-  "org.apache.spark" %% "spark-core" % "2.3.1",
-  "org.apache.spark" %% "spark-sql" % "2.3.1",
+  "org.apache.spark" %% "spark-core" % "3.0.1",
+  "org.apache.spark" %% "spark-sql" % "3.0.1",
   "org.apache.logging.log4j" % "log4j-api" % "2.14.0",
   "org.apache.logging.log4j" % "log4j-core" % "2.14.0",
   "com.typesafe" % "config" % "1.2.1",
@@ -14,7 +14,7 @@ libraryDependencies ++= Seq(
   "com.concurrentthought.cla" %% "command-line-arguments-examples" % "0.5.0"
 )
 
-libraryDependencies += "org.scalatest" %% "scalatest" % "2.2.4" % "test"
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.2" % "test"
 
 assemblyMergeStrategy in assembly := {
   case PathList("META-INF", xs @ _*) => MergeStrategy.discard

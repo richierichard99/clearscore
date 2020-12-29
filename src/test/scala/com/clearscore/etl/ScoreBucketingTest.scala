@@ -1,9 +1,10 @@
 package com.clearscore.etl
 
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpecLike
 import com.clearscore.etl.ScoreBucketing.formatNormalisedScore
+import org.scalatest.matchers.should.Matchers
 
-class ScoreBucketingTest extends FlatSpec with Matchers {
+class ScoreBucketingTest extends AnyFlatSpecLike with Matchers {
 
   "formatNormalisedScore" should "correctly format a given integer input for the score range it represents" in {
     formatNormalisedScore(2, 50) shouldBe "51.0-100.0"
